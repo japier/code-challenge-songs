@@ -37,10 +37,13 @@ That should create and restore the songs database
 `psql -h localhost -p 5432 -U postgres songs -c 'select id, name from songs limit 1'`
 
 it should see something similar to:
-`                 id                  |     name`
-`--------------------------------------+--------------`
-` 973d7631-7225-4f09-a4a3-57f963d67a17 | Silver Bells`
-`(1 row)`
+`                 id                  |     name\`
+
+`--------------------------------------+--------------\`
+
+` 973d7631-7225-4f09-a4a3-57f963d67a17 | Silver Bells\`
+
+`(1 row)\`
 
 ## Configuring credentials
 
