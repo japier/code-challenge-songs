@@ -1,0 +1,8 @@
+# Ignore build path
+bin/
+
+# Ignore credentials
+.env
+
+# Ignore editor paths
+tags
