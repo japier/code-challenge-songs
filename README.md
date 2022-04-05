@@ -2,6 +2,7 @@
 
 The finality of this challenge is to test the skills to get a project and increase it's functionality
 
+# Configuration
 
 ## Pre-requisites
 
@@ -44,3 +45,35 @@ it should see something similar to:
 `
 
 ## Configuring credentials
+
+To configure the credentials the env.example should be copy into a .env and replace the variables with the DB information
+
+## Install libraries
+
+**Before installing the libraries we need to have `go` already on the system**
+
+Installation of the libraries we will use go mod
+
+`go mod tidy`
+
+## Run Example
+
+In order to run the example we need to compile it first with the command
+
+`make build`
+
+An executable should be created on the folder `bin/`
+
+Once the executable is ready the script runs with the command
+
+`make run`
+
+### Develop
+
+To help with the development, the makefile includes a utility, running the command
+
+`make develop`
+
+Will run the script as a "development" and will watch the changes on the code to compile and rerun
+
+# Challenge

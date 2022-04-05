@@ -14,3 +14,6 @@ develop: restart
 
 kill:
 	@kill `cat $(PID)` || true
+
+run:
+	bin/$(APP)/main
