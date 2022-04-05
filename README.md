@@ -37,12 +37,10 @@ That should create and restore the songs database
 `psql -h localhost -p 5432 -U postgres songs -c 'select id, name from songs limit 1'`
 
 it should see something similar to:
-
-`                 id                  |     name
---------------------------------------+--------------
- 973d7631-7225-4f09-a4a3-57f963d67a17 | Silver Bells
-(1 row)
-`
+`                 id                  |     name`
+`--------------------------------------+--------------`
+` 973d7631-7225-4f09-a4a3-57f963d67a17 | Silver Bells`
+`(1 row)`
 
 ## Configuring credentials
 
@@ -77,3 +75,57 @@ To help with the development, the makefile includes a utility, running the comma
 Will run the script as a "development" and will watch the changes on the code to compile and rerun
 
 # Challenge
+
+Using REST API develop the next tasks
+
+1 - Add CRD (Create, Read, Delete) for the resources Song, Artist, Album, Playlist
+1.1 - Update endpoint is optional
+1.2 - The read responses should return the first 20 results, pagination is optional
+
+2 - Add at least tree of the next filters to the song resource
+  - Read by ID
+  - Read by Album ID
+  - Read by Album name
+  - Read by Artist ID
+  - Read by Artist name
+  - Filter by duration of the song
+  - Filter by key
+  - Filter by an additional property
+  - Filter by User ID
+
+2.1 - Optional is a generic filter that can get all properties
+
+3 - Add at least two of the next filters to Album
+ - Read by ID
+ - Read by name (Match exact the name)
+ - Read by Artist ID
+ - Read by Artist Name
+ - Filter by name (Match parts of the name)
+ - Filter by User ID
+
+ 3.1 Optional is a generic filter that can get all properties
+
+4 - Add at least two of the next filters to Artist
+  - Read by ID
+  - Read by name
+  - Filter by number of songs
+  - Filter by number of albums
+  - Filter by User ID
+
+5 - Link a song with a playlist
+
+6 - Add user ownership to the playlists
+
+Optional Activities
+- Add a Dockerfile that can build the service into a container
+- Add ownership to the playlists, and validation on the deletion (only the owner can delete it)
+- Add functionality to 'follow' a playlist
+- Export playlist to CSV or PDF
+
+## Deliverables
+
+Should be a single deliverable in a Pull Request to the main repository
+
+## Notes
+
+The architecture is based on [DDD](https://hexaviewtech.com/domain-driven-design-and-the-hexagonal-architecture/) it can be modified at will
