@@ -133,3 +133,8 @@ Should be a single deliverable in a Pull Request to the main repository
 ## Notes
 
 The architecture is based on [DDD](https://hexaviewtech.com/domain-driven-design-and-the-hexagonal-architecture/) it can be modified at will
+-Libraries used
+ * [Sqlx](https://github.com/jmoiron/sqlx)
+ * [Gin](github.com/gin-gonic/gin)
+ * [Logrus](github.com/sirupsen/logrus) 
+ * [GoDotEnv](github.com/joho/godotenv)
