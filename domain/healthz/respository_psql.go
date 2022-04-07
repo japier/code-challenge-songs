@@ -3,8 +3,28 @@ package healthz
 import (
 	"fmt"
 	"github/CreatorNinja/code-challenge-songs/pkg/db"
+	// TODO
+	//"github/CreatorNinja/code-challenge-songs/entities/healthz"
 	"log"
 )
+
+type Song struct {
+	Name string
+}
+
+type Artist struct {
+	Name string
+}
+
+type Album struct {
+	Name string
+	Thumbnail_URL string
+}
+
+type Playlist struct {
+	Name string
+	Thumbnail_URL string
+}
 
 type HealthzPSQL struct {
 	client *db.Client
@@ -62,4 +82,35 @@ func (r *HealthzPSQL) InsertSong(name string) (string, error) {
 	}
 	
 	return fmt.Sprintf("Data inserted correctly for %s", name), nil
+}
+
+// General function for retrieving the first 20 elements of each type
+func (r *HealthzPSQL) RetrieveAssetList(assetType int) ([]string, error) {
+	assetTable := "NONE"
+	assetStruct := []string{}
+
+	switch assetType {
+	case 0:
+		assetTable = "songs"
+	case 1:
+		assetTable = "artists"
+	case 2:
+		assetTable = "albums"
+	case 3:
+		assetTable = "playlists"
+	default:
+		assetTable = "undefined"
+	}
+
+	query := `SELECT name FROM ` + assetTable + ` LIMIT 20`
+
+	// Execute query
+	err := r.client.DB.Select(&assetStruct, query)
+
+	if err != nil {
+		log.Println("There was an error on the request", err)
+		return []string{""}, err
+	}
+
+	return assetStruct, nil
 }

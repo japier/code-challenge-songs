@@ -19,10 +19,10 @@ func HealthzRouter(e *gin.Engine, s healthz.UseCase) {
 	// e.POST("/healthz/create-playlist", CreatePlaylist(s))
 
 	// Read Methods
-	// e.GET("/healthz/list-song", GetListSong(s))
-	// e.GET("/healthz/list-artist", GetListArtist(s))
-	// e.GET("/healthz/list-album", GetListAlbum(s))
-	// e.GET("/healthz/list-playlist", GetListPlaylist(s))
+	e.GET("/healthz/list-songs", GetAssetList(s, 0))
+	e.GET("/healthz/list-artists", GetAssetList(s, 1))
+	e.GET("/healthz/list-albums", GetAssetList(s, 2))
+	e.GET("/healthz/list-playlists", GetAssetList(s, 3))
 
 	// Delete Methods
 	// e.DELETE("/healthz/delete-song", DeleteSong(s))
@@ -75,6 +75,31 @@ func CreateSong(s healthz.UseCase) gin.HandlerFunc {
 			"msg":    status,
 			"status": http.StatusOK,
 			"data":   "OK",
+		})
+		return
+	}
+}
+
+// GET method to obtain the first 20 elements of each asset type
+func GetAssetList(s healthz.UseCase, assetType int) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		status, err := s.GetHealthz()
+
+		if err != nil {
+			c.JSON(http.StatusCreated, gin.H{
+				"msg":    "Error on the request" + status,
+				"status": http.StatusBadRequest,
+				"data":   nil,
+			})
+			return
+		}
+
+		data, err := s.GetAssetList(assetType)
+		
+		c.JSON(http.StatusOK, gin.H{
+			"msg":    "",
+			"status": http.StatusOK,
+			"data":   data,
 		})
 		return
 	}
