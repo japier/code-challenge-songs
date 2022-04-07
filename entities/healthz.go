@@ -7,7 +7,6 @@ type Healthz struct {
 
 type Song struct {
 	Name string
-	Duration string
 }
 
 type Artist struct {

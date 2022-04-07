@@ -10,9 +10,10 @@ import (
 
 func HealthzRouter(e *gin.Engine, s healthz.UseCase) {
 	e.GET("/healthz", GetHealthz(s))
+	
 	// Here add all the methods for Create, Read, and Delete
 	// Create methods
-	// e.POST("/healthz/create-song", CreateSong(s))
+	 e.POST("/healthz/create-song", CreateSong(s))
 	// e.POST("/healthz/create-artist", CreateArtist(s))
 	// e.POST("/healthz/create-album", CreateAlbum(s))
 	// e.POST("/healthz/create-playlist", CreatePlaylist(s))
@@ -52,21 +53,29 @@ func GetHealthz(s healthz.UseCase) gin.HandlerFunc {
 	}
 }
 
-func CreateSong() gin.HandlerFunc {
+func CreateSong(s healthz.UseCase) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		status, err := status, err := s.GetHealthz()
-	}
-
-	if err != nil {
-		c.JSON(http.StatusCreated, gin.H{
-			"msg":    "Error on the request",
-			"status": http.StatusBadRequest,
-			"data":   nil,
+		status, err := s.GetHealthz()
+		
+		if err != nil {
+			c.JSON(http.StatusCreated, gin.H{
+				"msg":    "Error on the request",
+				"status": http.StatusBadRequest,
+				"data":   nil,
+			})
+			return
+		}
+	
+		//Otherwise, create song into the database
+		name := c.Query("name")
+		
+		// Add code for inserting into database here
+		status, err = s.CreateSong(name)
+		c.JSON(http.StatusOK, gin.H{
+			"msg":    status,
+			"status": http.StatusOK,
+			"data":   "OK",
 		})
 		return
 	}
-
-	//Otherwise, create song into the database
-	name := c.Query("name")
-	duration := c.Query("duration")
 }
