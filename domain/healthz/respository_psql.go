@@ -23,3 +23,13 @@ func (r *HealthzPSQL) CheckStatus() (string, error) {
 	}
 	return fmt.Sprintf("DB Healthy, with %d songs", songs), nil
 }
+
+func (r *HealthzPSQL) InsertSong() (string, error) {
+	var songs int
+	err := r.client.DB.Get(&songs, `SELECT count(*) FROM songs`)
+	if err != nil {
+		log.Println("There was an error on the request", err)
+		return "", err
+	}
+	return fmt.Sprintf("DB Healthy, with %d songs", songs), nil
+}
