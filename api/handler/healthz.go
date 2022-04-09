@@ -24,6 +24,9 @@ func HealthzRouter(e *gin.Engine, s healthz.UseCase) {
 	e.GET("/healthz/list-albums", GetAssetList(s, 2))
 	e.GET("/healthz/list-playlists", GetAssetList(s, 3))
 
+	// Testing of generic search function
+	e.GET("/healthz/search", SearchObject(s))
+
 	// Delete Methods
 	// e.DELETE("/healthz/delete-song", DeleteSong(s))
 	// e.DELETE("/healthz/delete-artist", DeleteArtist(s))
@@ -95,6 +98,35 @@ func GetAssetList(s healthz.UseCase, assetType int) gin.HandlerFunc {
 		}
 
 		data, err := s.GetAssetList(assetType)
+		
+		c.JSON(http.StatusOK, gin.H{
+			"msg":    "",
+			"status": http.StatusOK,
+			"data":   data,
+		})
+		return
+	}
+}
+
+// GET method to obtain the first 20 elements of each asset type
+func SearchObject(s healthz.UseCase, assetType int) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		// Checking health of the service i.e. connection to the DB
+		status, err := s.GetHealthz()
+
+		if err != nil { // In case of errors
+			c.JSON(http.StatusCreated, gin.H{
+				"msg":    "Error on the request" + status,
+				"status": http.StatusBadRequest,
+				"data":   nil,
+			})
+			return
+		}
+
+		// Health: OK, executing instruction depending on parameters
+		// Getting parameters
+		objectType := c.Query("objectType")
+		data, err := s.SearchObject(objectType)
 		
 		c.JSON(http.StatusOK, gin.H{
 			"msg":    "",

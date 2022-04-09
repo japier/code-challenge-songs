@@ -25,3 +25,8 @@ func (s *service) CreateSong(name string) (string, error) {
 func (s *service) GetAssetList(assetType int) ([]string, error) {
 	return s.repoDB.RetrieveAssetList(assetType)
 }
+
+// Function for search among all possible combinations
+func (s *service) SearchObject(objectType string, params []string) ([]string, error) {
+	return s.repoDB.SearchAsset(objectType, params)
+}

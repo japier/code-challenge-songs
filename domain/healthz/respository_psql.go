@@ -114,3 +114,34 @@ func (r *HealthzPSQL) RetrieveAssetList(assetType int) ([]string, error) {
 
 	return assetStruct, nil
 }
+
+// General function for searching any asset based on its name
+func (r *HealthzPSQL) SearchAsset(objectType string, params *string) ([]string, error) {
+	var err error
+	var query string
+	var assetStruct []string
+	
+	if params == nil {
+		query = `SELECT name FROM ` + objectType + ` LIMIT 20`
+
+		// Execute query
+		err = r.client.DB.Select(&assetStruct, query)
+
+		if err != nil {
+			log.Println("There was an error on the request", err)
+			return []string{""}, err
+		}
+	}
+
+	query = `SELECT name FROM songs LIMIT 20`
+
+	// Execute query
+	err = r.client.DB.Select(&assetStruct, query)
+
+	if err != nil {
+		log.Println("There was an error on the request", err)
+		return []string{""}, err
+	}
+
+	return assetStruct, nil
+}
