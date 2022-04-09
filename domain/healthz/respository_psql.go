@@ -116,12 +116,16 @@ func (r *HealthzPSQL) RetrieveAssetList(assetType int) ([]string, error) {
 }
 
 // General function for searching any asset based on its name
-func (r *HealthzPSQL) SearchAsset(objectType string, params *string) ([]string, error) {
+func (r *HealthzPSQL) SearchAsset(objectType string, params []string) ([]string, error) {
 	var err error
 	var query string
 	var assetStruct []string
+
+	log.Println(len(params))
+	log.Println(params)
 	
-	if params == nil {
+	// If there are no filtering
+	if len(params) == 0 {
 		query = `SELECT name FROM ` + objectType + ` LIMIT 20`
 
 		// Execute query

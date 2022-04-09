@@ -7,7 +7,7 @@ type RepositoryPsql interface {
 	
 	// Method for retrieval of list of 20 elements
 	RetrieveAssetList(assetType int) ([]string, error)
-	SearchAsset(objectType string, params []string)
+	SearchAsset(objectType string, params []string) ([]string, error)
 }
 
 type UseCase interface {
@@ -16,5 +16,5 @@ type UseCase interface {
 	
 	// Method for retrieval of list of 20 elements
 	GetAssetList(assetType int) ([]string, error)
-	SearchObject(assetType int, params []string)
+	SearchObject(objectType string, params []string) ([]string, error)
 }

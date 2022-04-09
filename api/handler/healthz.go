@@ -109,7 +109,7 @@ func GetAssetList(s healthz.UseCase, assetType int) gin.HandlerFunc {
 }
 
 // GET method to obtain the first 20 elements of each asset type
-func SearchObject(s healthz.UseCase, assetType int) gin.HandlerFunc {
+func SearchObject(s healthz.UseCase) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// Checking health of the service i.e. connection to the DB
 		status, err := s.GetHealthz()
@@ -126,7 +126,8 @@ func SearchObject(s healthz.UseCase, assetType int) gin.HandlerFunc {
 		// Health: OK, executing instruction depending on parameters
 		// Getting parameters
 		objectType := c.Query("objectType")
-		data, err := s.SearchObject(objectType)
+		parameters := []string{c.Query("name"), c.Query("name"),}
+		data, err := s.SearchObject(objectType, parameters)
 		
 		c.JSON(http.StatusOK, gin.H{
 			"msg":    "",
