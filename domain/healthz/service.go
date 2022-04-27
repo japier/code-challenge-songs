@@ -11,3 +11,22 @@ func NewService(r RepositoryPsql) *service {
 func (s *service) GetHealthz() (string, error) {
 	return s.repoDB.CheckStatus()
 }
+
+func (s *service) CreateSong(name string) (string, error) {
+	// TODO
+	//if s.repoDB.CheckSong(name) != nil {
+		//return s.repoDB.CheckSong(name)
+	//}
+
+	return s.repoDB.InsertSong(name)
+}
+
+// Function for returning the first 20 elements of each asset type
+func (s *service) GetAssetList(assetType int) ([]string, error) {
+	return s.repoDB.RetrieveAssetList(assetType)
+}
+
+// Function for search among all possible combinations
+func (s *service) SearchObject(objectType string, params []string) ([]string, error) {
+	return s.repoDB.SearchAsset(objectType, params)
+}
